@@ -1,0 +1,9 @@
+<div class="in_progress container-fluid">
+
+  {{!-- each sessions --}}
+  <h2><small>Session: </small> #123</h2>
+  <h3><small>User: </small>{{userName}}</h3>
+  <h3><small>Email: </small>{{userEmail}}</h3><br>
+
+  <button class="capture_session btn btn-primary">Capture Session</button> <button class="btn">Back</button>
+</div>

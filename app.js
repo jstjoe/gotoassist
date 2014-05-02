@@ -4,8 +4,11 @@
     events: {
       'app.activated':'onAppActivated',
       'click button.authenticate':'onAuthenticateClicked',
-      'click button.startSession':'onStartSessionClicked',
       'authenticateUser.fail':'authFailed',
+      'click button.startSession':'onStartSessionClicked',
+      'startSession.fail':'onSessionStart',
+
+      'click .launch_session':'onLaunchSessionClicked',
       'click .logout':'logout'
 
     },
@@ -127,6 +130,27 @@
       console.log("start session!");
       this.ajax("startSession", requestData, headers);
     },
+
+    onSessionStart: function(response) {
+      // var launch = response.startScreenSharing;
+      // var launchURL = launch.launchUrl;
+
+
+      this.switchTo('launch', {
+        userName: 'Joe McCarron',
+        userEmail: 'joe+it@zendesk.com',
+        launchURL: 'http://example.com' //launchURL
+      });
+    },
+    onLaunchSessionClicked: function(e) {
+      // if(e) {e.preventDefault();}
+      this.switchTo('inprogress', {
+        userName: 'Joe McCarron',
+        userEmail: 'joe+it@zendesk.com'
+      });
+
+    },
+
     logout: function(e) {
       if(e) {e.preventDefault();}
 
