@@ -1,9 +1,12 @@
 <div class="login_form container-fluid">
   <form class='form'>
-    <input></input>
-    <input type='password'></input>
-    
-
+    <label>Email</label>
+    <input placeholder="GoTo email" type="text" class="authenticateEmail"></input>
+    <br><br>
+    <label>Password</label>
+    <input type='password' placeholder='GoTo password' class='authenticatePwd'></input>
+    <br><br>
+    <button class="btn btn-primary authenticate">Authenticate</button>
   </form>
 
 </div>
