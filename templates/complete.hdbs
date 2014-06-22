@@ -1,0 +1,28 @@
+{{#with session}}
+<div class="well container-fluid">
+  
+  <p>Session ID: {{sessionId}}</p>
+  <p>Customer name: {{customerName}}</p>
+  <p>Status: <span class="label">{{status}}</span></p>
+  <br>
+  <p>Started: {{startedAt}}</p>
+  <p>Customer joined: {{customerJoinedAt}}</p>
+  <p>Ended: {{endedAt}}</p>
+  <p><strong>Duration: {{duration}}s</strong></p>
+  <a href='{{sessionRecordingUrl}}' class='recording'>Recording</a>
+  {{!-- hidden text content (out of alignment due to issues with jquery .text()) --}}
+<span class="completed_session hidden"><p>Session ID: {{sessionId}}</p>
+<p>Customer name: {{customerName}}</p>
+<p>Status: {{status}}</p><br>
+<p>Started: {{startedAt}}</p>
+<p>Customer joined: {{customerJoinedAt}}</p>
+<p>Ended: {{endedAt}}</p>
+<p>Duration: {{duration}}s</p>
+[Recording]({{sessionRecordingUrl}})</span>
+  <br>
+  <button class="btn cancel">Cancel</button>
+  <button class="btn btn-primary pull-right save">Save Session to Ticket</button>
+  
+</div>
+{{/with}}
+<br>

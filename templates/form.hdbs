@@ -1,15 +1,12 @@
-<div class="session_form container-fluid">
+<button class="logout btn btn-small pull-right">Logout</button>
+<div class="session_form well">
   <form class="form">
     <label>Customer Email</label>
     <input type="text" class="userEmail" value="{{requesterEmail}}"></input>
     <br><br>
     <label>Customer Name</label>
     <input type="text" class="userName" value="{{requesterName}}"></input>
-    <br><br>
-    <button class="btn btn-primary startSession">Start Session</button>
+    <button class="btn btn-primary pull-right startSession">Start Session</button>
   </form>
 
 </div>
-<footer>
-  <button class="logout btn btn-small pull-right">Logout</button>
-</footer>

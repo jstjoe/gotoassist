@@ -1,5 +1,7 @@
-<div class="launch container-fluid">
-  <h3><small>User: </small>{{userName}}</h3>
-  <h3><small>Email: </small>{{userEmail}}</h3><br>
-  <a href="{{launchURL}}" target="blank" class="launch_session btn btn-primary">Launch Session</a> <button class="btn">Back</button>
+<div class="launch container-fluid well">
+  <div class="alert alert-success">A session has been started. Once you launch the session click Get Sessions below to see your sessions and capture info.</div>
+  <h4><span class="muted">User: </span>{{userName}}</h4>
+  <h4><span class="muted">Email: </span>{{userEmail}}</h4>
 </div>
+<button class="btn cancel">Cancel</button>
+<span class="action"><a href="{{launchURL}}" target="blank" class="launch_session btn btn-primary pull-right">Launch Session</a></span>

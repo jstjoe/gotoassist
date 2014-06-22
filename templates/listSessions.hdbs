@@ -1,0 +1,18 @@
+{{#unless sessions}}<div class="notice notice-alert">No recent sessions. Make sure you've started the session then click Refresh Sessions.</div>
+<br>
+{{/unless}}
+
+{{#each sessions}}
+<div class="well session" id="session-{{sessionId}}">
+  <p>Session ID: {{sessionId}}</p>
+  {{#if customerName}}<p>Customer name: {{customerName}}</p>{{/if}}
+  <p>Status: <span class="label">{{status}}</span></p>
+  <p>Started: {{startedAt}}</p>
+  {{#unless ../complete}}<p><a href='{{customerJoinUrl}}' target='blank'>Customer Join URL</a></p>{{/unless}}
+  {{#if customerJoinedAt}}<p>Customer joined: {{customerJoinedAt}}</p>{{/if}}
+  {{#if endedAt}}<p>Ended: {{endedAt}}</p>{{/if}}
+  {{#if ../duration}}<p><strong>Duration: {{this}}</strong></p>{{/if}}
+</div>
+{{/each}}
+<button class="btn cancel">Cancel</button>
+<button class="btn refresh pull-right">Refresh Sessions</button>
