@@ -169,11 +169,12 @@
       var headers = {
         Authorization: helpers.fmt("OAuth oauth_token=%@", token)
       };
-      console.log(fromDate, toDate);
+      // console.log(fromDate, toDate);
       this.ajax('getSessions', headers, fromDate, toDate);
     },
     gotSessions: function(response, date) {
       var sessions = response.sessions;
+      this.sessions = sessions;
       if (sessions.length == 1 && sessions[0].status == 'complete') {
         var session = sessions[0];
         this.sessionComplete(session);
@@ -197,16 +198,32 @@
       }
     },
     selectSession: function(e) {
-      debugger;
+      // debugger;
+      // user clicked a session, grab it's ID and GET the session info...
+      // or just grab it from a variable (stored elsewhere)?
+      var position = this.$(e.currentTarget).data("arrayposition"),
+        session = this.sessions[position];
+      this.sessionComplete(session);
 
     },
     sessionComplete: function(session) {
-      var complete = true;
-      var start = Date.parse(session.startedAt);
-      var end = Date.parse(session.endedAt);
-      var duration = end - start;
-      duration = duration.toString();
-      session.duration = duration.substring(0, duration.length - 3);
+      // process a single session's data and switchTo the 'complete' template with it
+      var complete = true,
+        start = Date.parse(session.customerJoinedAt),
+        end = Date.parse(session.endedAt),
+        ms = end - start,
+        // minutes = Math.floor(duration / 60000),
+        // seconds = duration - minutes * 60;
+        // seconds = duration % 60;
+        // var ms = duration;
+        minutes = (ms/1000/60) << 0;
+        seconds = (ms/1000) % 60;
+        seconds = seconds.toString();
+        // seconds = seconds.substring(0, seconds.length - 4);
+      // duration = duration.toString();
+      // session.duration = duration.substring(0, duration.length - 3);
+      session.minutes = minutes;
+      session.seconds = seconds;
       session.startedAt = new Date(session.startedAt);
       session.startedAt = session.startedAt.toLocaleString();
       session.customerJoinedAt = new Date (session.customerJoinedAt);

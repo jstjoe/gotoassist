@@ -8,21 +8,23 @@
   <p>Started: {{startedAt}}</p>
   <p>Customer joined: {{customerJoinedAt}}</p>
   <p>Ended: {{endedAt}}</p>
-  <p><strong>Duration: {{duration}}s</strong></p>
-  <a href='{{sessionRecordingUrl}}' class='recording'>Recording</a>
+  <p><strong>Duration: {{minutes}} min, {{seconds}} sec</strong></p>
+ {{!--  <p><strong>Duration: {{duration}}s</strong></p> --}}
+  <a href='{{sessionRecordingUrl}}' class='recording' target="blank">Recording</a>
   {{!-- hidden text content (out of alignment due to issues with jquery .text()) --}}
+
+  <br><br>
+  <button class="btn cancel">Cancel</button>
+  <button class="btn btn-primary pull-right save">Copy Session to Ticket</button>
+</div>
 <span class="completed_session hidden"><p>Session ID: {{sessionId}}</p>
 <p>Customer name: {{customerName}}</p>
 <p>Status: {{status}}</p><br>
 <p>Started: {{startedAt}}</p>
 <p>Customer joined: {{customerJoinedAt}}</p>
 <p>Ended: {{endedAt}}</p>
-<p>Duration: {{duration}}s</p>
-[Recording]({{sessionRecordingUrl}})</span>
-  <br>
-  <button class="btn cancel">Cancel</button>
-  <button class="btn btn-primary pull-right save">Save Session to Ticket</button>
-  
-</div>
+<p>Duration: {{minutes}} min, {{seconds}} sec</p>
+
+[Recording]({{sessionRecordingUrl}})</span>  
 {{/with}}
 <br>

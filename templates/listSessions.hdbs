@@ -3,7 +3,7 @@
 {{/unless}}
 
 {{#each sessions}}
-<div class="well session" id="session-{{sessionId}}">
+<div class="well session" id="session-{{sessionId}}" data-arrayposition="{{@index}}">
   <p>Session ID: {{sessionId}}</p>
   {{#if customerName}}<p>Customer name: {{customerName}}</p>{{/if}}
   <p>Status: <span class="label">{{status}}</span></p>
