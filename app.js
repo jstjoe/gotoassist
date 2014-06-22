@@ -65,7 +65,6 @@
           requester = ticket.requester(),
           email = requester.email(),
           name = requester.name();
-
         this.switchTo('form', {
           requesterEmail: email,
           requesterName: name
@@ -73,11 +72,9 @@
     },
     onAuthenticateClicked: function(e) {
       if(e) { e.preventDefault(); }
-
       // grab the creds from the login form
-      var agentEmail = this.$('input.authenticateEmail').val();
-      var agentPwd = this.$('input.authenticatePwd').val();
-
+      var agentEmail = this.$('input.authenticateEmail').val(),
+        agentPwd = this.$('input.authenticatePwd').val();
       // use the creds and authenticate into GoTo API
       this.ajax('authenticateUser', agentEmail, agentPwd).done( function(response) {
         //handle the response
@@ -95,14 +92,9 @@
       });
     },
     authFailed: function(response) {
-      // var credentialsSaved = false;
-      // var credentialsFailed = true;
       services.notify("Authentication failed. Please try again or check your credentials.", "error");
       this.switchTo('login', {
-        // saved : credentialsSaved,
-        // failed: credentialsFailed
       });
-      // TODO add banner to the login form for failure
     },
 
     onStartSessionClicked: function(e) {
@@ -126,7 +118,6 @@
         headers = {Authorization: helpers.fmt("OAuth oauth_token=%@", token)};
       this.ajax("startSession", requestData, headers, userName, userEmail);
     },
-
     onSessionStart: function(response, userName, userEmail) {
       this.switchTo('launch', {
         userName: userName,
@@ -225,5 +216,4 @@
       this.start();
     }
   };
-
 }());
