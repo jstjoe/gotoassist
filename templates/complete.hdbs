@@ -9,14 +9,13 @@
   <p>Customer joined: {{customerJoinedAt}}</p>
   <p>Ended: {{endedAt}}</p>
   <p><strong>Duration: {{minutes}} min, {{seconds}} sec</strong></p>
- {{!--  <p><strong>Duration: {{duration}}s</strong></p> --}}
+  <br>
   <a href='{{sessionRecordingUrl}}' class='recording' target="blank">Recording</a>
-  {{!-- hidden text content (out of alignment due to issues with jquery .text()) --}}
-
   <br><br>
   <button class="btn cancel">Cancel</button>
   <button class="btn btn-primary pull-right save">Copy Session to Ticket</button>
 </div>
+{{!-- hidden text content (out of alignment due to issues with jquery .text()) --}}
 <span class="completed_session hidden"><p>Session ID: {{sessionId}}</p>
 <p>Customer name: {{customerName}}</p>
 <p>Status: {{status}}</p><br>

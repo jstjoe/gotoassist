@@ -6,7 +6,6 @@
       'click button.authenticate':'onAuthenticateClicked',
       'authenticateUser.fail':'authFailed',
       'click button.startSession':'onStartSessionClicked',
-      // 'startSession.done':'onSessionStart',
       'startSession.fail':'onStartSessionFail',
 
       'click .launch_session':'onLaunchSessionClicked',
@@ -16,7 +15,6 @@
       'click .logout':'logout',
       'click .cancel':'reset',
       'click .save':'saveSessionToTicket'
-
     },
     requests: {
       authenticateUser: function(agentEmail, agentPwd) {
@@ -60,11 +58,11 @@
         var token = this.store('goToToken') || false;
         //if no creds switch to the login template
         if(!token) {
-          var credentialsSaved = false,
-            credentialsFailed = false;
+          // var credentialsSaved = false,
+          //   credentialsFailed = false;
           this.switchTo('login', {
-            saved : credentialsSaved,
-            failed: credentialsFailed
+            // saved : credentialsSaved,
+            // failed: credentialsFailed
           });
           return;
         }
@@ -107,12 +105,12 @@
       });
     },
     authFailed: function(response) {
-      var credentialsSaved = false;
-      var credentialsFailed = true;
+      // var credentialsSaved = false;
+      // var credentialsFailed = true;
       services.notify("Authentication failed. Please try again or check your credentials.", "error");
       this.switchTo('login', {
-        saved : credentialsSaved,
-        failed: credentialsFailed
+        // saved : credentialsSaved,
+        // failed: credentialsFailed
       });
       // TODO add banner to the login form for failure
     },
@@ -121,23 +119,21 @@
       if(e) { e.preventDefault(); }
 
       var ticket = this.ticket(),
-        id = ticket.id();
-      var account = this.currentAccount(),
-        subdomain = account.subdomain();
-      var userEmail = this.$('.userEmail').val();
-      var userName = this.$('.userName').val();
-      var data = {
-        sessionType: "screen_sharing",
-        partnerObject: id,
-        partnerObjectUrl: helpers.fmt('https://%@.zendesk.com/tickets/%@', subdomain, id),
-        customerName: userName,
-        customerEmail: userEmail
-      };
-      var requestData = JSON.stringify(data);
-      var token = this.store('goToToken');
-      var headers = {
-        Authorization: helpers.fmt("OAuth oauth_token=%@", token)
-      };
+        id = ticket.id(),
+        account = this.currentAccount(),
+        subdomain = account.subdomain(),
+        userEmail = this.$('.userEmail').val(),
+        userName = this.$('.userName').val(),
+        data = {
+          sessionType: "screen_sharing",
+          partnerObject: id,
+          partnerObjectUrl: helpers.fmt('https://%@.zendesk.com/tickets/%@', subdomain, id),
+          customerName: userName,
+          customerEmail: userEmail
+        },
+        requestData = JSON.stringify(data),
+        token = this.store('goToToken'),
+        headers = {Authorization: helpers.fmt("OAuth oauth_token=%@", token)};
       this.ajax("startSession", requestData, headers, userName, userEmail);
     },
 
@@ -150,26 +146,22 @@
     },
     onLaunchSessionClicked: function(e) {
       this.$('.action').html('<button class="list_sessions btn btn-primary pull-right">Get Sessions</button>');
-
       var now = new Date();
       this.launchedTime = new Date();
       this.launchedTime.setMinutes(now.getMinutes() - 1);
     },
     getSessions: function(e) {
       if(e) {e.preventDefault();}
-
       var now = new Date();
       now.setSeconds(now.getSeconds() - 10);
-      var toJSON = now.toJSON();
-      var toDate = toJSON.substring(0,19)+"Z";
-
-      var fromJSON = this.launchedTime.toJSON();
-      var fromDate = fromJSON.substring(0,19)+"Z";
-      var token = this.store('goToToken');
-      var headers = {
+      var toJSON = now.toJSON(),
+        toDate = toJSON.substring(0,19)+"Z",
+        fromJSON = this.launchedTime.toJSON(),
+        fromDate = fromJSON.substring(0,19)+"Z",
+        token = this.store('goToToken'),
+        headers = {
         Authorization: helpers.fmt("OAuth oauth_token=%@", token)
       };
-      // console.log(fromDate, toDate);
       this.ajax('getSessions', headers, fromDate, toDate);
     },
     gotSessions: function(response, date) {
@@ -190,7 +182,6 @@
             session.endedAt = new Date(session.endedAt);
             session.endedAt = session.endedAt.toLocaleString();
           }
-          
         });
         this.switchTo('listSessions', {
           sessions: sessions
@@ -198,30 +189,20 @@
       }
     },
     selectSession: function(e) {
-      // debugger;
       // user clicked a session, grab it's ID and GET the session info...
       // or just grab it from a variable (stored elsewhere)?
       var position = this.$(e.currentTarget).data("arrayposition"),
         session = this.sessions[position];
       this.sessionComplete(session);
-
     },
     sessionComplete: function(session) {
       // process a single session's data and switchTo the 'complete' template with it
-      var complete = true,
-        start = Date.parse(session.customerJoinedAt),
+      var start = Date.parse(session.customerJoinedAt),
         end = Date.parse(session.endedAt),
         ms = end - start,
-        // minutes = Math.floor(duration / 60000),
-        // seconds = duration - minutes * 60;
-        // seconds = duration % 60;
-        // var ms = duration;
-        minutes = (ms/1000/60) << 0;
+        minutes = (ms/1000/60) << 0,
         seconds = (ms/1000) % 60;
         seconds = seconds.toString();
-        // seconds = seconds.substring(0, seconds.length - 4);
-      // duration = duration.toString();
-      // session.duration = duration.substring(0, duration.length - 3);
       session.minutes = minutes;
       session.seconds = seconds;
       session.startedAt = new Date(session.startedAt);
@@ -230,8 +211,6 @@
       session.customerJoinedAt = session.customerJoinedAt.toLocaleString();
       session.endedAt = new Date(session.endedAt);
       session.endedAt = session.endedAt.toLocaleString();
-      //TODO pull this and the following switchTo into a separate function and call it if the status is complete here
-      //or if a user chooses one of multiple sessions
       this.session = session;
       this.switchTo('complete', {
         session: session
@@ -244,20 +223,14 @@
     },
     logout: function(e) {
       if(e) {e.preventDefault();}
-
       this.store('goToToken', '');
-      var credentialsSaved = false,
-        credentialsFailed = false;
       this.switchTo('login', {
-        saved : credentialsSaved,
-        failed: credentialsFailed
       });
     },
     reset: function(e) {
       if(e) {e.preventDefault();}
       this.start();
     }
-
   };
 
 }());
