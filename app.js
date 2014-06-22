@@ -7,7 +7,6 @@
       'authenticateUser.fail':'authFailed',
       'click button.startSession':'onStartSessionClicked',
       'startSession.fail':'onStartSessionFail',
-
       'click .launch_session':'onLaunchSessionClicked',
       'click .list_sessions':'getSessions',
       'click .refresh':'getSessions',
@@ -50,7 +49,6 @@
         };
       }
     },
-
     // ## NAMED FUNCTIONS
     start: function() {
         //load the app, authenticate the user, and switch to the template
@@ -58,18 +56,10 @@
         var token = this.store('goToToken') || false;
         //if no creds switch to the login template
         if(!token) {
-          // var credentialsSaved = false,
-          //   credentialsFailed = false;
           this.switchTo('login', {
-            // saved : credentialsSaved,
-            // failed: credentialsFailed
           });
           return;
         }
-        // TODO if there is a token...
-        // TODO verify the token by making an arbitray authenticated API call?
-
-
         // ...switch to the 'form' template if successful
         var ticket = this.ticket(),
           requester = ticket.requester(),
@@ -219,7 +209,10 @@
     saveSessionToTicket: function() {
       var sessionInfo = this.$('.completed_session').text();
       this.comment().text(sessionInfo);
-      this.comment().type('internalNote');
+      if(this.setting('default_private')) {
+        this.comment().type('internalNote');
+      }
+      // switch to AJAX submission?
     },
     logout: function(e) {
       if(e) {e.preventDefault();}
