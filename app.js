@@ -9,6 +9,7 @@
       'startSession.fail':'onStartSessionFail',
       'click .launch_session':'onLaunchSessionClicked',
       'click .list_sessions':'getSessions',
+      'click .customer_join_url':'copyURL',
       'click .refresh':'getSessions',
       'click .session':'selectSession',
       'click .logout':'logout',
@@ -169,12 +170,20 @@
         });
       }
     },
+    copyURL: function(e) {
+      e.preventDefault();
+      var customerJoinURL = this.$('.customer_join_url').attr('href');
+      var customerJoinLink = helpers.fmt('[%@](%@)', customerJoinURL, customerJoinURL);
+      this.comment().text(customerJoinURL);
+    },
     selectSession: function(e) {
       // user clicked a session, grab it's ID and GET the session info...
       // or just grab it from a variable (stored elsewhere)?
       var position = this.$(e.currentTarget).data("arrayposition"),
         session = this.sessions[position];
-      this.sessionComplete(session);
+        if(session.status == 'complete') {
+          this.sessionComplete(session);
+        }
     },
     sessionComplete: function(session) {
       // process a single session's data and switchTo the 'complete' template with it
